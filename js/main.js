@@ -6,10 +6,10 @@ function getRandomIntInclusive(min, max) {
 }
 
 //Функция для проверки максимальной длины строки
-function CheckLength(str, maxLength) {
+function checkLength(str, maxLength) {
   return str.length <= maxLength;
 }
 
 
 getRandomIntInclusive(1, 2);
-CheckLength('', 1);
+checkLength('', 1);
