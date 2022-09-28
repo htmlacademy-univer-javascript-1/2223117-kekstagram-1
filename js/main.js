@@ -58,4 +58,4 @@ function getComments(count) {
 }
 
 checkLength('', 1);
-getData(5);
+export { getData };
