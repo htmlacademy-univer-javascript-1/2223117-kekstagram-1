@@ -56,3 +56,6 @@ function getComments(count) {
 
   return structureOfObjects;
 }
+
+checkLength('', 1);
+getData(5);
