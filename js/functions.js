@@ -10,6 +10,6 @@ function checkLength(str, maxLength) {
   return str.length <= maxLength;
 }
 
-export{
+export {
   getRandomIntInclusive, checkLength
 };
