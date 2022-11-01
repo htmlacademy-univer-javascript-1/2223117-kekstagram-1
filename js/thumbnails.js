@@ -1,4 +1,5 @@
 import { createPhotos } from './object-generator.js';
+import { showBigPicture } from './big-pictures.js';
 
 const renderThumbnails = () => {
   // Находим внутри шаблона элемент для фотографий
@@ -13,13 +14,18 @@ const renderThumbnails = () => {
   const photosListFragment = document.createDocumentFragment();
 
   // Создаёс массив фотографий с лайками и комментариями
-  photos.forEach(({url, likes, comments}) => {
+  photos.forEach((picture) => {
+    const { url, likes, comments } = picture;
     // Создаём копию
     const photo = photoTemplate.cloneNode(true);
-    photo.querySelector('.picture__img').setAttribute('src', url);
+    photo.querySelector('.picture__img').src = url;
     photo.querySelector('.picture__likes').textContent = likes;
-    photo.querySelector('.picture__comments').textContent = comments;
+    photo.querySelector('.picture__comments').textContent = comments.length;
     photosListFragment.appendChild(photo);
+
+    photo.addEventListener('click', () => {
+      showBigPicture(picture);
+    });
   });
 
   // Добавление фотографий в блок
