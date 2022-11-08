@@ -12,7 +12,6 @@ const hashTagsElement = document.querySelector('.text__hashtags');
 const descriptionElement = document.querySelector('.text__description');
 
 
-
 const onPopupEscKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
