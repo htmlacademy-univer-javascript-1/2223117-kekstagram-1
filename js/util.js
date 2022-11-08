@@ -10,6 +10,10 @@ function checkLength(str, maxLength) {
   return str.length <= maxLength;
 }
 
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
+const isEnterKey = (evt) => evt.key === 'Enter';
+
 export {
-  getRandomIntInclusive, checkLength
+  getRandomIntInclusive, checkLength, isEscapeKey, isEnterKey
 };

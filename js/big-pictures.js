@@ -1,8 +1,10 @@
+import { isEscapeKey } from './util.js';
+
 //  Полноэкранный показ изображения
 const bigPicture = document.querySelector('.big-picture');
 // Комментарии к изображению
 const commentList = document.querySelector('.social__comments');
-const commentItem = commentList.querySelector('.social__comment').cloneNode(true);
+const commentItem = commentList.querySelector('.social__comment');
 const socialCommentCount = document.querySelector('.social__comment-count');
 // Загрузка новых комментариев
 const commentsLoader = document.querySelector('.comments-loader');
@@ -39,7 +41,7 @@ const renderComments = (comments) => {
   commentList.appendChild(fragment);
 };
 
-const showBigPicture = ({ url, likes, description, comments }) => {
+const showBigPictureAndRender = ({ url, likes, description, comments }) => {
   bigPicture.classList.remove('hidden');
   body.classList.add('modal-open');
   commentsLoader.classList.add('hidden');
@@ -58,11 +60,11 @@ const showBigPicture = ({ url, likes, description, comments }) => {
 };
 
 document.addEventListener('keydown', (evt) => {
-  if (evt.key === 'Escape') {
+  if (isEscapeKey(evt)) {
     evt.preventDefault();
     body.classList.remove('modal-open');
     bigPicture.classList.add('hidden');
   }
 });
 
-export { showBigPicture };
+export { showBigPictureAndRender };
