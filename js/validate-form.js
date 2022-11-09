@@ -1,5 +1,5 @@
 import { checkLength } from './util.js';
-import { imgUploadForm, descriptionElement, hashTagsElement } from './form.js'
+import { imgUploadForm, descriptionElement, hashTagsElement } from './form.js';
 
 const COMMENT_MAX_LENGTH = 140;
 const HASHTAG_MAX_LENGTH = 5;
