@@ -56,6 +56,9 @@ main {
   overflow: hidden;
 }
 
+.img-upload__field-wrapper {
+  margin-bottom: 25px;
+}
 
 /**
  * Кнопка закрытия модального окна

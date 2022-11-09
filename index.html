@@ -17,10 +17,10 @@
     <section class="img-filters  img-filters--inactive  container">
       <h2 class="img-filters__title  visually-hidden">Фильтр фотографий</h2>
       <form class="img-filters__form" action="index.html" method="get" autocomplete="off">
-        <button type=button class="img-filters__button  img-filters__button--active" id="filter-default">По
+        <button type="button" class="img-filters__button  img-filters__button--active" id="filter-default">По
           умолчанию</button>
-        <button type=button class="img-filters__button" id="filter-random">Случайные</button>
-        <button type=button class="img-filters__button" id="filter-discussed">Обсуждаемые</button>
+        <button type="button" class="img-filters__button" id="filter-random">Случайные</button>
+        <button type="button" class="img-filters__button" id="filter-discussed">Обсуждаемые</button>
       </form>
     </section>
 
@@ -126,13 +126,11 @@
                 <!-- Добавление хэш-тегов и комментария к изображению -->
                 <fieldset class="img-upload__text text">
                   <div class="img-upload__field-wrapper">
-                    <input type="text" class="text__hashtags" name="hashtags" placeholder="#ХэшТег"
-                      data-pristine-maxlength="20" data-pristine-maxlength-message="Максимальная длина 20 символов">
+                    <input type="text" class="text__hashtags" name="hashtags" placeholder="#ХэшТег">
                   </div>
                   <div class="img-upload__field-wrapper">
                     <textarea class="text__description" name="description" placeholder="Ваш комментарий..."
-                      data-pristine-maxlength="140"
-                      data-pristine-maxlength-message="Максимальная длина 140 символов"></textarea>
+                      maxlength="141"></textarea>
                   </div>
                 </fieldset>
 

@@ -1,93 +1,49 @@
-import { isEscapeKey, checkLength } from './util.js';
+import { checkLength } from './util.js';
+import { imgUploadForm, descriptionElement, hashTagsElement } from './form.js'
 
-const MAX_HASHTAGS = 5;
-const MAX_SYMBOLS = 140;
+const COMMENT_MAX_LENGTH = 140;
+const HASHTAG_MAX_LENGTH = 5;
+const regExp = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;
 
-const uploadFile = document.querySelector('#upload-file');
-const imgUploadOverlay = document.querySelector('.img-upload__overlay');
-const bodyElement = document.querySelector('body');
-const uploadCancel = document.querySelector('#upload-cancel');
-const imgUploadForm = document.querySelector('.img-upload__form');
-const hashTagsElement = document.querySelector('.text__hashtags');
-const descriptionElement = document.querySelector('.text__description');
+const messageFormError = {
+  HASHTAG_FORMAT: 'Хештег должен быть от 2 до 20 символов, начинаться с решетки и состоять из букв и цифр ',
+  HASHTAG_LENGTH: `Вы можете указать не больше ${HASHTAG_MAX_LENGTH} хэштегов`,
+  HASHTAG_DUPLICATION: 'Хэштеги не должны повторяться',
+  COMMENT_LENGTH: `Длина комментария может быть не более ${COMMENT_MAX_LENGTH} символов`,
+};
 
+// Проверка хэштегов
+const validateHashtags = (value) => {
+  const hashtags = value.toLowerCase().trim().split(' ');
+  return hashtags.every((hashTag) => regExp.test(hashTag));
+};
 
-const onPopupEscKeydown = (evt) => {
-  if (isEscapeKey(evt)) {
-    evt.preventDefault();
-    closeFormEditImg();
-  }
+// Проверка количества хэштегов
+const checkingTheNumberOfHashtags = (value) => {
+  const hashtags = value.toLowerCase().trim().split(' ');
+  return hashtags.length <= HASHTAG_MAX_LENGTH;
+};
+
+// Проверка уникальности хэштегов
+const checkingUniqueness = (value) => {
+  const hashtags = value.toLowerCase().trim().split(' ');
+  return hashtags.length === (new Set(hashtags)).size;
 };
 
 
-function openUploadImg() {
-  document.addEventListener('keydown', onPopupEscKeydown);
-}
-
-function closeFormEditImg() {
-  imgUploadOverlay.classList.add('hidden');
-  bodyElement.classList.remove('modal-open');
-  document.imgUploadForm.reset();
-  document.removeEventListener('keydown', onPopupEscKeydown);
-}
-
-uploadCancel.addEventListener('click', () => {
-  closeFormEditImg();
-});
-
-uploadFile.addEventListener('change', () => {
-  openUploadImg();
-  imgUploadOverlay.classList.remove('hidden');
-  bodyElement.classList.add('modal-open');
-});
-
-//отменить обработчик Esc при фокусе
-hashTagsElement.addEventListener('keydown', (evt) => {
-  if (isEscapeKey(evt)) {
-    evt.stopPropagation();
-  }
-});
-descriptionElement.addEventListener('keydown', (evt) => {
-  if (isEscapeKey(evt)) {
-    evt.stopPropagation();
-  }
-});
-
-// Валидация хэштегов и комментариев
 const pristine = new Pristine(imgUploadForm, {
-  classTo: 'img-upload__field-wrapper',
+  classTo: 'img-upload__form',
   errorTextParent: 'img-upload__field-wrapper'
 });
 
-const hashtags = function (value) {
-  value.toLowerCase().split(' ');
-};
+// Добавляем валидаторы
+pristine.addValidator(descriptionElement, (value) => checkLength(value, COMMENT_MAX_LENGTH), messageFormError.COMMENT_LENGTH);
+pristine.addValidator(hashTagsElement, validateHashtags, messageFormError.HASHTAG_FORMAT);
+pristine.addValidator(hashTagsElement, checkingUniqueness, messageFormError.HASHTAG_DUPLICATION);
+pristine.addValidator(hashTagsElement, checkingTheNumberOfHashtags, messageFormError.HASHTAG_LENGTH);
 
-pristine.addValidator(hashTagsElement, (value) => hashtags(value).length <= MAX_HASHTAGS,
-  'нельзя указать больше пяти хэш-тегов');
-
-const isHashtagValid = (value) => {
-  const RegExp = /^#[A-Za-z0-9А-Яа-яЁё]{1,19}$/;
-  const array = value.split(' ');
-  for (const arrayElement of array) {
-    if (!RegExp.test(arrayElement) && arrayElement !== '') {
-      return false;
-    }
-  } return true;
-};
-pristine.addValidator(hashTagsElement,
-  (value) => isHashtagValid(value),
-  'хэш-тег начинается с символа #, длиной от 2 до 20 символов, состоит из букв и чисел'
-);
-
-pristine.addValidator(descriptionElement,
-  (value) => checkLength(value, MAX_SYMBOLS),
-  'длина комментария не больше 140 символов'
-);
 
 imgUploadForm.addEventListener('submit', (evt) => {
-  const isValid = pristine.validate();
-  if (isValid) {
-    evt.preventDefault();
-  }
+  evt.preventDefault();
+  pristine.validate();
 });
