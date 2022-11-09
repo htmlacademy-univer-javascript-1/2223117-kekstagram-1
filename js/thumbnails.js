@@ -1,5 +1,5 @@
 import { createPhotos } from './object-generator.js';
-import { showBigPictureAndRender } from './big-pictures.js';
+import { showBigPicture } from './big-pictures.js';
 
 const renderThumbnails = () => {
   // Находим внутри шаблона элемент для фотографий
@@ -24,7 +24,7 @@ const renderThumbnails = () => {
     photosListFragment.appendChild(photo);
 
     photo.addEventListener('click', () => {
-      showBigPictureAndRender(picture);
+      showBigPicture(picture);
     });
   });
 
