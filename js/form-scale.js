@@ -170,7 +170,7 @@ const applyEffectHeat = () => {
 };
 
 // Кпопки эффектов
-radioButtonsEffects .forEach((effectsRadioButton) => {
+radioButtonsEffects.forEach((effectsRadioButton) => {
   effectsRadioButton.addEventListener('change', () => {
     if (effectsRadioButton.checked) {
       const effectId = effectsRadioButton.id;

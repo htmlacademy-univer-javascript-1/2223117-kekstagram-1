@@ -7,7 +7,7 @@ const scaleControlSmallerElement = document.querySelector('.scale__control--smal
 const scaleControlBiggerElement = document.querySelector('.scale__control--bigger');
 const scaleControlValueElement = document.querySelector('.scale__control--value');
 const imgUploadOverlayElement = document.querySelector('.img-upload__overlay');
-const imgUploadPreviewElement = imgUploadOverlayElement.querySelector('.img-upload__preview').querySelector('img');;
+const imgUploadPreviewElement = imgUploadOverlayElement.querySelector('.img-upload__preview').querySelector('img');
 
 
 scaleControlValueElement.value = `${DEFAULT_SCALE_VALUE}%`;
