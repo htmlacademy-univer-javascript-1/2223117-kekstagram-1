@@ -1,40 +1,30 @@
-const DATA_SOURCE = 'https://26.javascript.pages.academy/kekstagram/data';
-const DATA_RECIPIENT = 'https://26.javascript.pages.academy/kekstagram';
+import { showAlert } from "./util.js";
 
-const getData = (onSuccess, onFail) => {
-  fetch(DATA_SOURCE)
-    .then((response) => {
-      if (response.ok) {
-        response.json()
-          .then((data) => {
-            onSuccess(data);
-          });
-      } else {
-        onFail();
-      }
+const getData = (onSuccess) => {
+  fetch("https://26.javascript.pages.academy/kekstagram/data")
+    .then((response) => response.json())
+    .then((pictures) => {
+      onSuccess(pictures);
     })
     .catch(() => {
-      onFail();
+      showAlert("Не удалось загрузить изображения с сервера");
     });
 };
 
 const sendData = (onSuccess, onFail, body) => {
-  fetch(DATA_RECIPIENT,
-    {
-      method: 'POST',
-      body,
-    },
-  )
+  fetch("https://26.javascript.pages.academy/kekstagram", {
+    method: "POST",
+    body,
+  })
     .then((response) => {
       if (response.ok) {
         onSuccess();
-      }
-      else {
-        onFail();
+      } else {
+        onFail("Не удалось отправить форму. Попробуйте ещё раз");
       }
     })
     .catch(() => {
-      onFail();
+      onFail("Не удалось отправить форму. Попробуйте ещё раз");
     });
 };
 
