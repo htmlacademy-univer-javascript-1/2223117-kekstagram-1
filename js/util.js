@@ -1,19 +1,46 @@
-//Функция, возвращающая случайное целое число из переданного диапазона включительно
-function getRandomIntInclusive(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min; //Максимум и минимум включаются
+const ALERT_SHOW_TIME = 4000;
+
+const isEscapeKey = (evt) => evt.key === "Escape";
+
+function showErrorMessage() {
+  const fragment = document.createDocumentFragment();
+  const messageContainer = document.querySelector("body");
+  const templateFragment = document.querySelector("#error").content;
+  const template = templateFragment.querySelector(".error");
+  const templateElement = template.cloneNode(true);
+  fragment.appendChild(templateElement);
+  messageContainer.appendChild(fragment);
 }
 
-//Функция для проверки максимальной длины строки
-function checkLength(str, maxLength) {
-  return str.length <= maxLength;
+function showSuccessMessage() {
+  const fragment = document.createDocumentFragment();
+  const messageContainer = document.querySelector("body");
+  const templateFragment = document.querySelector("#success").content;
+  const template = templateFragment.querySelector(".success");
+  const templateElement = template.cloneNode(true);
+  fragment.appendChild(templateElement);
+  messageContainer.appendChild(fragment);
 }
 
-const isEscapeKey = (evt) => evt.key === 'Escape';
+const showAlert = (message) => {
+  const alertContainer = document.createElement("div");
+  alertContainer.style.zIndex = 100;
+  alertContainer.style.position = "absolute";
+  alertContainer.style.left = 0;
+  alertContainer.style.top = 0;
+  alertContainer.style.right = 0;
+  alertContainer.style.padding = "10px 3px";
+  alertContainer.style.fontSize = "15px";
+  alertContainer.style.textAlign = "center";
+  alertContainer.style.backgroundColor = "red";
 
-const isEnterKey = (evt) => evt.key === 'Enter';
+  alertContainer.textContent = message;
 
-export {
-  getRandomIntInclusive, checkLength, isEscapeKey, isEnterKey
+  document.body.append(alertContainer);
+
+  setTimeout(() => {
+    alertContainer.remove();
+  }, ALERT_SHOW_TIME);
 };
+
+export { isEscapeKey, showErrorMessage, showSuccessMessage, showAlert };
