@@ -1,5 +1,3 @@
-import { isEscapeKey } from "./util.js";
-
 function showBigPicture(generatedImagesArray) {
   const bigPicture = document.querySelector(".big-picture");
   const commentList = bigPicture.querySelector(".social__comments");
@@ -9,9 +7,11 @@ function showBigPicture(generatedImagesArray) {
   const likesCount = bigPicture.querySelector(".likes-count");
   const socialCaption = bigPicture.querySelector(".social__caption");
   const commentsLoader = bigPicture.querySelector(".comments-loader");
+  const commentsBlock = bigPicture.querySelector(".social__comment-count");
   const pictures = document.querySelector(".pictures");
 
   let addDefiniteComments = null;
+  let commentsCounter = 0;
 
   function openBigPicture(image) {
     bigPicture.classList.remove("hidden");
@@ -22,6 +22,7 @@ function showBigPicture(generatedImagesArray) {
     commentsCount.textContent = image.comments.length;
     socialCaption.textContent = image.description;
     clearComments();
+    commentsCounter = 0;
     renderComments(image.comments);
     document.addEventListener("keydown", onEscapeButtonClick);
     bigPictureCancel.addEventListener("click", closeBigPicture);
@@ -37,17 +38,17 @@ function showBigPicture(generatedImagesArray) {
     commentsLoader.removeEventListener("click", addDefiniteComments);
   }
 
-  const onEscapeButtonClick = (evt) => {
-    if (isEscapeKey(evt)) {
-      closeBigPicture();
+  function onEscapeButtonClick(evt) {
+    if (evt.key === "Escape") {
+      closeBigPicture(evt);
     }
-  };
+  }
 
   function clearComments() {
     commentList.textContent = "";
   }
 
-  function createAllComments(comments) {
+  function createAllComments(comments, totalComments) {
     const templateFragment = document.querySelector("#comment").content;
     const photoTemplate = templateFragment.querySelector(".social__comment");
     const fragment = document.createDocumentFragment();
@@ -61,21 +62,25 @@ function showBigPicture(generatedImagesArray) {
       templateText.textContent = element.message;
 
       fragment.appendChild(photo);
+      commentsCounter++;
     });
+
     commentList.appendChild(fragment);
+    commentsBlock.textContent = `${commentsCounter} из ${totalComments} комментариев`;
   }
 
   function renderComments(comments) {
     const commentsArrayCopy = comments.slice();
+    const totalComments = comments.length;
 
     if (commentsArrayCopy.length <= 5) {
-      createAllComments(commentsArrayCopy);
+      createAllComments(commentsArrayCopy, totalComments);
       commentsLoader.classList.add("hidden");
       return;
     }
 
     addDefiniteComments = function createDefiniteComments() {
-      createAllComments(commentsArrayCopy.splice(0, 5));
+      createAllComments(commentsArrayCopy.splice(0, 5), totalComments);
 
       if (commentsArrayCopy.length === 0) {
         commentsLoader.classList.add("hidden");
@@ -83,7 +88,7 @@ function showBigPicture(generatedImagesArray) {
       }
     };
 
-    createAllComments(commentsArrayCopy.splice(0, 5));
+    createAllComments(commentsArrayCopy.splice(0, 5), totalComments);
     commentsLoader.classList.remove("hidden");
     commentsLoader.addEventListener("click", addDefiniteComments);
   }

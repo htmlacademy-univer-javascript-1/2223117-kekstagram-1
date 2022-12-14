@@ -1,4 +1,4 @@
-import { showErrorMessage, showSuccessMessage, isEscapeKey } from "./util.js";
+import { showErrorMessage, showSuccessMessage } from "./util.js";
 import { changeScale, deleteScaleHandlers } from "./form-scale.js";
 import { chooseEffects, deleteSlider } from "./effects.js";
 import { sendData } from "./api.js";
@@ -15,11 +15,23 @@ let closeUploudFileElement = null;
 
 function addNewImage() {
   function openUploudFileElement() {
+    const formUploadImage = imgUploadForm.querySelector(
+      ".img-upload__preview img"
+    );
+    const effectPreviewImage =
+      imgUploadForm.querySelectorAll(".effects__preview");
+    const uploadFile = uploadFile.files[0];
+    formUploadImage.src = URL.createObjectURL(uploadFile);
+
+    effectPreviewImage.forEach((element) => {
+      element.style.backgroundImage = `url(${URL.createObjectURL(uploadFile)})`;
+    });
+
     imgUploadOverlay.classList.remove("hidden");
     document.body.classList.add("modal-open");
   }
 
-  function closeUploudFileElement() {
+  closeUploudFileElement = function () {
     imgUploadOverlay.classList.add("hidden");
     document.body.classList.remove("modal-open");
     uploadFile.value = "";
@@ -30,10 +42,10 @@ function addNewImage() {
     uploadCancel.removeEventListener("click", onCloseButtonClick);
     deleteSlider();
     deleteScaleHandlers();
-  }
+  };
 
   function onModalEscKeydown(evt) {
-    if (isEscapeKey(evt)) {
+    if (evt.key === "Escape") {
       if (evt.target !== hashTagsElement && evt.target !== descriptionElement) {
         closeUploudFileElement();
       }
@@ -136,6 +148,7 @@ function validateForm() {
 
           function onSuccessMessageCloseButtonClick() {
             successMessage.classList.add("hidden");
+            successMessage.remove();
             successMessageCloseButton.removeEventListener(
               "click",
               onSuccessMessageCloseButtonClick
@@ -159,6 +172,7 @@ function validateForm() {
           function onErrorMessageCloseButtonClick() {
             imgUploadOverlay.classList.remove("hidden");
             errorMessage.classList.add("hidden");
+            errorMessage.remove();
             errorMessageCloseButton.removeEventListener(
               "click",
               onErrorMessageCloseButtonClick

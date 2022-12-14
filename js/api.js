@@ -1,31 +1,25 @@
-import { showAlert } from "./util.js";
-
-const getData = (onSuccess) => {
+function getData(functionOnSuccess, functionOnFail) {
   fetch("https://26.javascript.pages.academy/kekstagram/data")
     .then((response) => response.json())
-    .then((pictures) => {
-      onSuccess(pictures);
+    .then((data) => {
+      functionOnSuccess(data);
     })
-    .catch(() => {
-      showAlert("Не удалось загрузить изображения с сервера");
-    });
-};
+    .catch(() => functionOnFail());
+}
 
-const sendData = (onSuccess, onFail, body) => {
+function sendData(functionOnSuccess, functionOnFail, requestBody) {
   fetch("https://26.javascript.pages.academy/kekstagram", {
     method: "POST",
-    body,
+    body: requestBody,
   })
     .then((response) => {
       if (response.ok) {
-        onSuccess();
+        functionOnSuccess();
       } else {
-        onFail("Не удалось отправить форму. Попробуйте ещё раз");
+        functionOnFail();
       }
     })
-    .catch(() => {
-      onFail("Не удалось отправить форму. Попробуйте ещё раз");
-    });
-};
+    .catch(() => functionOnFail());
+}
 
 export { getData, sendData };
