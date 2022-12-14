@@ -6,6 +6,9 @@ function renderThumbnails(images) {
   const phototemplate = templateFragment.querySelector(".picture");
   const photosListFragment = document.createDocumentFragment();
 
+  const photosTodelete = document.querySelectorAll(".picture");
+  photosTodelete.forEach((image) => image.remove());
+
   for (let i = 0; i < imagesArray.length; i++) {
     const photo = phototemplate.cloneNode(true);
     const templateImage = photo.querySelector(".picture__img");
