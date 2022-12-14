@@ -1,3 +1,5 @@
+const MAX_COMMENTS = 5;
+
 function showBigPicture(generatedImagesArray) {
   const bigPicture = document.querySelector(".big-picture");
   const commentList = bigPicture.querySelector(".social__comments");
@@ -50,18 +52,18 @@ function showBigPicture(generatedImagesArray) {
 
   function createAllComments(comments, totalComments) {
     const templateFragment = document.querySelector("#comment").content;
-    const photoTemplate = templateFragment.querySelector(".social__comment");
+    const template = templateFragment.querySelector(".social__comment");
     const fragment = document.createDocumentFragment();
 
     comments.forEach((element) => {
-      const photo = photoTemplate.cloneNode(true);
-      const templatePicture = photo.querySelector(".social__picture");
-      const templateText = photo.querySelector(".social__text");
+      const templateElement = template.cloneNode(true);
+      const templatePicture = templateElement.querySelector(".social__picture");
+      const templateText = templateElement.querySelector(".social__text");
       templatePicture.src = element.avatar;
       templatePicture.alt = element.name;
       templateText.textContent = element.message;
 
-      fragment.appendChild(photo);
+      fragment.appendChild(templateElement);
       commentsCounter++;
     });
 
@@ -73,14 +75,17 @@ function showBigPicture(generatedImagesArray) {
     const commentsArrayCopy = comments.slice();
     const totalComments = comments.length;
 
-    if (commentsArrayCopy.length <= 5) {
+    if (commentsArrayCopy.length <= MAX_COMMENTS) {
       createAllComments(commentsArrayCopy, totalComments);
       commentsLoader.classList.add("hidden");
       return;
     }
 
     addDefiniteComments = function createDefiniteComments() {
-      createAllComments(commentsArrayCopy.splice(0, 5), totalComments);
+      createAllComments(
+        commentsArrayCopy.splice(0, MAX_COMMENTS),
+        totalComments
+      );
 
       if (commentsArrayCopy.length === 0) {
         commentsLoader.classList.add("hidden");
@@ -88,7 +93,7 @@ function showBigPicture(generatedImagesArray) {
       }
     };
 
-    createAllComments(commentsArrayCopy.splice(0, 5), totalComments);
+    createAllComments(commentsArrayCopy.splice(0, MAX_COMMENTS), totalComments);
     commentsLoader.classList.remove("hidden");
     commentsLoader.addEventListener("click", addDefiniteComments);
   }

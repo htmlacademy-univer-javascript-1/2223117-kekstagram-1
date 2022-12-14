@@ -1,4 +1,4 @@
-const ALERT_SHOW_TIME = 4000;
+const TIME_DELAY = 4000;
 
 function getRandomNumber(minNumber, maxNumber) {
   if (minNumber >= 0 && maxNumber >= 0) {
@@ -13,47 +13,47 @@ function getRandomArrayElement(array) {
 
 function showErrorMessage() {
   const fragment = document.createDocumentFragment();
-  const alertContainer = document.querySelector("body");
+  const messageContainer = document.querySelector("body");
   const templateFragment = document.querySelector("#error").content;
   const template = templateFragment.querySelector(".error");
   const templateElement = template.cloneNode(true);
   fragment.appendChild(templateElement);
-  alertContainer.appendChild(fragment);
+  messageContainer.appendChild(fragment);
 }
 
 function showSuccessMessage() {
   const fragment = document.createDocumentFragment();
-  const alertContainer = document.querySelector("body");
+  const messageContainer = document.querySelector("body");
   const templateFragment = document.querySelector("#success").content;
   const template = templateFragment.querySelector(".success");
   const templateElement = template.cloneNode(true);
   fragment.appendChild(templateElement);
-  alertContainer.appendChild(fragment);
+  messageContainer.appendChild(fragment);
 }
 
 function showAlert() {
-  const alertContainer = document.createElement("div");
-  alertContainer.style.zIndex = "10";
-  alertContainer.style.position = "absolute";
-  alertContainer.style.left = "0";
-  alertContainer.style.top = "0";
-  alertContainer.style.right = "0";
-  alertContainer.style.padding = "16px 12px";
-  alertContainer.style.fontSize = "20px";
-  alertContainer.style.textAlign = "center";
-  alertContainer.style.backgroundColor = "red";
-  alertContainer.textContent = "Не удалось загрузить изображения с сервера";
+  const messageContainer = document.createElement("div");
 
-  document.body.append(alertContainer);
+  messageContainer.style.zIndex = "10";
+  messageContainer.style.position = "absolute";
+  messageContainer.style.left = "0";
+  messageContainer.style.top = "0";
+  messageContainer.style.right = "0";
+  messageContainer.style.padding = "16px 12px";
+  messageContainer.style.fontSize = "20px";
+  messageContainer.style.textAlign = "center";
+  messageContainer.style.backgroundColor = "red";
+  messageContainer.textContent = "Ошибка загрузки изображений";
+
+  document.body.append(messageContainer);
 
   setTimeout(() => {
-    alertContainer.remove();
-  }, ALERT_SHOW_TIME);
+    messageContainer.remove();
+  }, TIME_DELAY);
 }
 
-function eliminationRattle(callback, timeoutDelay) {
+function debounce(callback, timeoutDelay) {
   let timeoutId;
-
   return (...rest) => {
     clearTimeout(timeoutId);
     timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
@@ -65,5 +65,5 @@ export {
   showErrorMessage,
   showSuccessMessage,
   showAlert,
-  eliminationRattle,
+  debounce,
 };

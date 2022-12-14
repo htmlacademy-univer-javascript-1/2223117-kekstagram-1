@@ -3,8 +3,11 @@ import { changeScale, deleteScaleHandlers } from "./form-scale.js";
 import { chooseEffects, deleteSlider } from "./effects.js";
 import { sendData } from "./api.js";
 
+const MAX_CHARACTERS_COUNT = 140;
+const MAX_HASHTAGS_COUNT = 5;
+
 const imgUploadForm = document.querySelector(".img-upload__form");
-const uploadFile = imgUploadForm.querySelector("#upload-file");
+const fileUploadInput = imgUploadForm.querySelector("#upload-file");
 const imgUploadOverlay = imgUploadForm.querySelector(".img-upload__overlay");
 const uploadCancel = imgUploadForm.querySelector(".img-upload__cancel");
 const descriptionElement = imgUploadForm.querySelector(".text__description");
@@ -20,7 +23,7 @@ function addNewImage() {
     );
     const effectPreviewImage =
       imgUploadForm.querySelectorAll(".effects__preview");
-    const uploadFile = uploadFile.files[0];
+    const uploadFile = fileUploadInput.files[0];
     formUploadImage.src = URL.createObjectURL(uploadFile);
 
     effectPreviewImage.forEach((element) => {
@@ -34,7 +37,7 @@ function addNewImage() {
   closeUploudFileElement = function () {
     imgUploadOverlay.classList.add("hidden");
     document.body.classList.remove("modal-open");
-    uploadFile.value = "";
+    fileUploadInput.value = "";
     hashTagsElement.value = "";
     descriptionElement.value = "";
     submitButton.disabled = false;
@@ -56,10 +59,11 @@ function addNewImage() {
     closeUploudFileElement();
   }
 
-  uploadFile.addEventListener("change", () => {
+  fileUploadInput.addEventListener("change", () => {
     openUploudFileElement();
     uploadCancel.addEventListener("click", onCloseButtonClick);
     document.addEventListener("keydown", onModalEscKeydown);
+
     changeScale();
     chooseEffects();
   });
@@ -87,26 +91,18 @@ function validateForm() {
 
   function isNoMoreThanFiveElements(value) {
     const hashTagsArray = value.trim().split(" ");
-    if (hashTagsArray.length <= 5) {
-      return true;
-    } else {
-      return false;
-    }
+    return hashTagsArray.length <= MAX_HASHTAGS_COUNT;
   }
 
   function areSameElements(value) {
     value = String(value).toLowerCase();
     const hashTagsArray = value.trim().split(" ");
     const set = new Set(hashTagsArray);
-    if (set.size === hashTagsArray.length) {
-      return true;
-    } else {
-      return false;
-    }
+    return set.size === hashTagsArray.length;
   }
 
   function validateCommentMaxLength(value) {
-    return value.length <= 140;
+    return value.length <= MAX_CHARACTERS_COUNT;
   }
 
   pristine.addValidator(

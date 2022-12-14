@@ -1,3 +1,7 @@
+const SCALE_MIN = 0.25;
+const SCALE_MAX = 1;
+const SCALE_STEP = 0.25;
+
 const imagePreview = document.querySelector(".img-upload__preview img");
 const scale = document.querySelector(".img-upload__scale");
 const scaleSmallerButton = scale.querySelector(".scale__control--smaller");
@@ -8,8 +12,8 @@ let onSmallerScaleButtonClick = null;
 let onBiggerScaleButtonClick = null;
 
 function changeScale() {
-  const scaleStep = 0.25;
   let scaleCurrent = 1;
+
   scaleField.value = "100%";
   imagePreview.style.transform = "scale(1)";
 
@@ -20,15 +24,15 @@ function changeScale() {
   }
 
   onSmallerScaleButtonClick = function decreaseScale() {
-    if (scaleCurrent > 0.25) {
-      scaleCurrent -= scaleStep;
+    if (scaleCurrent > SCALE_MIN) {
+      scaleCurrent -= SCALE_STEP;
       scaleTransform();
     }
   };
 
   onBiggerScaleButtonClick = function increaseScale() {
-    if (scaleCurrent < 1) {
-      scaleCurrent += scaleStep;
+    if (scaleCurrent < SCALE_MAX) {
+      scaleCurrent += SCALE_STEP;
       scaleTransform();
     }
   };

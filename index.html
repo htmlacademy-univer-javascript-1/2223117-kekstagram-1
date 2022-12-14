@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <link rel="stylesheet" href="css/normalize.css" />
     <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="nouislider/nouislider.css" />
+    <link rel="stylesheet" href="./nouislider/nouislider.css" />
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
     <title>Кекстаграм</title>
   </head>
@@ -57,9 +57,9 @@
               class="img-upload__form"
               id="upload-select-image"
               method="post"
+              action="https://26.javascript.pages.academy/kekstagram"
               enctype="multipart/form-data"
               autocomplete="off"
-              action="https://26.javascript.pages.academy/kekstagram"
             >
               <!-- Изначальное состояние поля для загрузки изображения -->
               <fieldset class="img-upload__start">
@@ -240,7 +240,6 @@
                   <fieldset class="img-upload__text text">
                     <div class="img-upload__field-wrapper">
                       <input
-                        type="text"
                         class="text__hashtags"
                         name="hashtags"
                         placeholder="#ХэшТег"
@@ -251,7 +250,6 @@
                         class="text__description"
                         name="description"
                         placeholder="Ваш комментарий..."
-                        maxlength="141"
                       ></textarea>
                     </div>
                   </fieldset>
@@ -305,7 +303,7 @@
 
             <!-- Комментарии к изображению -->
             <div class="social__comment-count">
-              5 из <span class="comments-count">125</span> комментариев
+              <span class="comments-count">125</span> комментариев
             </div>
             <ul class="social__comments">
               <li class="social__comment">
@@ -417,7 +415,7 @@
       <a href="#" class="picture">
         <img
           class="picture__img"
-          src=""
+          src="./"
           width="182"
           height="182"
           alt="Случайная фотография"
@@ -427,10 +425,12 @@
           <span class="picture__likes"></span>
         </p>
       </a>
-      <!-- Шаблон комментария в режиме полноэкранного просмотра фото -->
-	  <template id="comment">
-  	    <li class="social__comment">
-  	      <img class="social__picture" src="./" alt="" width="35" height="35">
+    </template>
+
+    <!-- Шаблон комментария в режиме полноэкранного просмотра фото -->
+    <template id="comment">
+      <li class="social__comment">
+        <img class="social__picture" src="./" alt="" width="35" height="35" />
         <p class="social__text"></p>
       </li>
     </template>
@@ -463,8 +463,9 @@
         Загружаем...
       </div>
     </template>
-    <script src="nouislider/nouislider.js"></script>
-    <script src="js/main.js" type="module"></script>
-    <script src="pristine/pristine.min.js"></script>
+
+    <script src="./nouislider/nouislider.js"></script>
+    <script src="./js/main.js" type="module"></script>
+    <script src="./pristine/pristine.min.js"></script>
   </body>
 </html>

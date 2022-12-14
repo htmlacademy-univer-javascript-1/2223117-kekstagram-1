@@ -1,8 +1,8 @@
 function getData(functionOnSuccess, functionOnFail) {
   fetch("https://26.javascript.pages.academy/kekstagram/data")
     .then((response) => response.json())
-    .then((data) => {
-      functionOnSuccess(data);
+    .then((generatedImagesArray) => {
+      functionOnSuccess(generatedImagesArray);
     })
     .catch(() => functionOnFail());
 }
