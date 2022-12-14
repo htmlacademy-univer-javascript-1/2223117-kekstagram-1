@@ -1,16 +1,16 @@
-const imagePreview = document.querySelector(".img-upload__preview img");
-const effectsList = document.querySelector(".effects__list");
-const slider = document.querySelector(".img-upload__effect-level");
-const sliderValue = slider.querySelector(".effect-level__value");
-const sliderBar = slider.querySelector(".effect-level__slider");
+const imagePreview = document.querySelector('.img-upload__preview img');
+const effectsList = document.querySelector('.effects__list');
+const slider = document.querySelector('.img-upload__effect-level');
+const sliderValue = slider.querySelector('.effect-level__value');
+const sliderBar = slider.querySelector('.effect-level__slider');
 
 let chooseEffectContainer = null;
 
 function chooseEffects() {
   function cleareffect() {
-    slider.classList.remove("hidden");
-    imagePreview.style.filter = "";
-    imagePreview.classList = "";
+    slider.classList.remove('hidden');
+    imagePreview.style.filter = '';
+    imagePreview.classList = '';
   }
 
   function onImageEffectUpdate(effectValue) {
@@ -39,13 +39,13 @@ function chooseEffects() {
   }
 
   chooseEffectContainer = function chooseEffect(evt) {
-    if (evt.target.id === "effect-none") {
+    if (evt.target.id === 'effect-none') {
       cleareffect();
-      slider.classList.add("hidden");
-      imagePreview.classList.add("effects__preview--none");
+      slider.classList.add('hidden');
+      imagePreview.classList.add('effects__preview--none');
     }
 
-    if (evt.target.id === "effect-chrome") {
+    if (evt.target.id === 'effect-chrome') {
       sliderBar.noUiSlider.updateOptions({
         start: 1,
         step: 0.1,
@@ -53,15 +53,15 @@ function chooseEffects() {
           min: 0,
           max: 1,
         },
-        connect: "lower",
+        connect: 'lower',
       });
 
       cleareffect();
-      imagePreview.classList.add("effects__preview--chrome");
-      sliderBar.noUiSlider.on("update", onImageChromeEffectUpdate);
+      imagePreview.classList.add('effects__preview--chrome');
+      sliderBar.noUiSlider.on('update', onImageChromeEffectUpdate);
     }
 
-    if (evt.target.id === "effect-sepia") {
+    if (evt.target.id === 'effect-sepia') {
       sliderBar.noUiSlider.updateOptions({
         start: 1,
         step: 0.1,
@@ -69,15 +69,15 @@ function chooseEffects() {
           min: 0,
           max: 1,
         },
-        connect: "lower",
+        connect: 'lower',
       });
 
       cleareffect();
-      imagePreview.classList.add("effects__preview--sepia");
-      sliderBar.noUiSlider.on("update", onImageSepiaEffectUpdate);
+      imagePreview.classList.add('effects__preview--sepia');
+      sliderBar.noUiSlider.on('update', onImageSepiaEffectUpdate);
     }
 
-    if (evt.target.id === "effect-marvin") {
+    if (evt.target.id === 'effect-marvin') {
       sliderBar.noUiSlider.updateOptions({
         start: 100,
         step: 1,
@@ -85,15 +85,15 @@ function chooseEffects() {
           min: 0,
           max: 100,
         },
-        connect: "lower",
+        connect: 'lower',
       });
 
       cleareffect();
-      imagePreview.classList.add("effects__preview--marvin");
-      sliderBar.noUiSlider.on("update", onImageMarvinEffectUpdate);
+      imagePreview.classList.add('effects__preview--marvin');
+      sliderBar.noUiSlider.on('update', onImageMarvinEffectUpdate);
     }
 
-    if (evt.target.id === "effect-phobos") {
+    if (evt.target.id === 'effect-phobos') {
       sliderBar.noUiSlider.updateOptions({
         start: 3,
         step: 0.1,
@@ -101,15 +101,15 @@ function chooseEffects() {
           min: 0,
           max: 3,
         },
-        connect: "lower",
+        connect: 'lower',
       });
 
       cleareffect();
-      imagePreview.classList.add("effects__preview--phobos");
-      sliderBar.noUiSlider.on("update", onImagePhobosEffectUpdate);
+      imagePreview.classList.add('effects__preview--phobos');
+      sliderBar.noUiSlider.on('update', onImagePhobosEffectUpdate);
     }
 
-    if (evt.target.id === "effect-heat") {
+    if (evt.target.id === 'effect-heat') {
       sliderBar.noUiSlider.updateOptions({
         start: 3,
         step: 0.1,
@@ -117,17 +117,17 @@ function chooseEffects() {
           min: 1,
           max: 3,
         },
-        connect: "lower",
+        connect: 'lower',
       });
 
       cleareffect();
-      imagePreview.classList.add("effects__preview--heat");
-      sliderBar.noUiSlider.on("update", onImageHeatEffectUpdate);
+      imagePreview.classList.add('effects__preview--heat');
+      sliderBar.noUiSlider.on('update', onImageHeatEffectUpdate);
     }
   };
 
   cleareffect();
-  slider.classList.add("hidden");
+  slider.classList.add('hidden');
 
   noUiSlider.create(sliderBar, {
     start: 100,
@@ -136,14 +136,14 @@ function chooseEffects() {
       min: 0,
       max: 100,
     },
-    connect: "lower",
+    connect: 'lower',
   });
 
-  effectsList.addEventListener("click", chooseEffectContainer);
+  effectsList.addEventListener('click', chooseEffectContainer);
 }
 
 function deleteSlider() {
-  effectsList.removeEventListener("click", chooseEffectContainer);
+  effectsList.removeEventListener('click', chooseEffectContainer);
   sliderBar.noUiSlider.destroy();
 }
 
